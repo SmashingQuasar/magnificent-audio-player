@@ -1,1 +1,1 @@
-# magnificent-audio-player
+# magnificent audio player

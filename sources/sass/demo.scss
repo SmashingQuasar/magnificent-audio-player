@@ -1,0 +1,87 @@
+main
+{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif,
+}
+
+[data-mvp*="container"]
+{
+
+    ul
+    {
+        background-color: rgba(0, 0, 0, 0.65);
+        border: 1px dashed blue;
+        height: 50px;
+        display: flex;
+
+        li
+        {
+            display: flex;
+            align-items: center;
+        }
+    }
+    button.play,
+    button.pause
+    {
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 45%;
+        height: 100%;
+        width:50px;
+    }
+
+    button.play
+    {
+        background-image: url("../../demo/images/svg/play.svg");
+    }
+
+    button.pause
+    {
+        background-image: url("../../demo/images/svg/pause.svg");
+    }
+
+    progress
+    {
+        height: 15px;
+        background-color: white;
+        margin: 5px;
+    }
+
+    progress[data-mvp="timeline"]
+    {
+        width: 500px;
+    }
+
+    span[data-mvp="time"]
+    {
+        display: flex;
+        height: 100%;
+        color: white;
+        font-weight: bold;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    button.mute
+    {
+        width: 50px;
+        height: 100%;
+        background-image: url("../../demo/images/svg/sound.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 25px;
+    }
+
+}
+
+[data-mvp*="container"].muted
+{
+    button.mute
+    {
+        background-image: url("../../demo/images/svg/mute.svg");
+    }
+}

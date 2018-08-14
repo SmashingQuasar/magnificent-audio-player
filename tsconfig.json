@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "outDir": "./build/javascript",
+        "allowJs": true,
+        "target": "es5",
+        "lib": ["dom", "es2015", "es2017"],
+        "alwaysStrict": true,
+        "removeComments": true,
+        "strict": true,
+        "charset": "UTF-8",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "allowUnusedLabels": false,
+        "allowUnreachableCode": false,
+        "checkJs": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "newLine": "LF",
+    },
+    "include": [
+        "./sources/typescript"
+    ]
+}
