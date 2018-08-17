@@ -8,7 +8,7 @@ window.addEventListener(
 
         if (CONTAINER === null)
         {
-            throw new ReferenceError("MVP Demo: Impossible to find container.");
+            throw new ReferenceError("MAP Demo: Impossible to find container.");
         }
         
         new MagnificientAudioPlayer(

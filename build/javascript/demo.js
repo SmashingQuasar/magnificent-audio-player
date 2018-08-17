@@ -2,7 +2,7 @@
 window.addEventListener("load", function () {
     var CONTAINER = document.querySelector("custom-player[data-map=\"container\"]");
     if (CONTAINER === null) {
-        throw new ReferenceError("MVP Demo: Impossible to find container.");
+        throw new ReferenceError("MAP Demo: Impossible to find container.");
     }
     new MagnificientAudioPlayer({
         container: CONTAINER,

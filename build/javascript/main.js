@@ -175,6 +175,9 @@ var MagnificientAudioPlayer = (function () {
         });
         this.audioPlayer.addEventListener("timeupdate", function () {
             _this.timeline.value = _this.audioPlayer.currentTime;
+            var PROGRESS = 100 / _this.audioPlayer.duration * _this.audioPlayer.currentTime / 100;
+            var EVENT = new CustomEvent("MAPProgressUpdate", { detail: PROGRESS });
+            _this.audioPlayer.dispatchEvent(EVENT);
             _this.updateTime();
         });
         if (configuration.displaySoundControls === undefined) {
@@ -329,6 +332,8 @@ var MagnificientAudioPlayer = (function () {
             if (volume < 0) {
                 volume = 0;
             }
+            var EVENT = new CustomEvent("MAPVolumeUpdate", { detail: volume });
+            this.audioPlayer.dispatchEvent(EVENT);
             this.volume.value = volume;
             this.audioPlayer.volume = volume;
         }

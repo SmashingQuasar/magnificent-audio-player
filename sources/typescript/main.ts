@@ -351,6 +351,14 @@ class MagnificientAudioPlayer
             () =>
             {
                 this.timeline.value = this.audioPlayer.currentTime;
+
+
+                const PROGRESS: number = 100 / this.audioPlayer.duration * this.audioPlayer.currentTime / 100;
+
+                const EVENT: Event = new CustomEvent("MAPProgressUpdate", {detail: PROGRESS});
+                this.audioPlayer.dispatchEvent(EVENT);
+
+
                 this.updateTime();
             }
         );
@@ -647,6 +655,9 @@ class MagnificientAudioPlayer
                 volume = 0;
             }
 
+            const EVENT: CustomEvent = new CustomEvent("MAPVolumeUpdate", { detail: volume });
+            this.audioPlayer.dispatchEvent(EVENT);
+            
             this.volume.value = volume;
             this.audioPlayer.volume = volume;
         }
