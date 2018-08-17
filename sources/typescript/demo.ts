@@ -4,7 +4,7 @@ window.addEventListener(
     "load",
     () =>
     {
-        const CONTAINER: HTMLElement | null = document.querySelector(`custom-player[data-mvp="container"]`);
+        const CONTAINER: HTMLElement | null = document.querySelector(`custom-player[data-map="container"]`);
 
         if (CONTAINER === null)
         {

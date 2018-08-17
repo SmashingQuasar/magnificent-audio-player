@@ -63,7 +63,7 @@ class MagnificientAudioPlayer
 
         if (configuration.container === undefined)
         {
-            throw new SyntaxError("MVP: Invalid configuration object: No container property.");
+            throw new SyntaxError("MAP: Invalid configuration object: No container property.");
         }
         this.container = configuration.container;
 
@@ -75,7 +75,7 @@ class MagnificientAudioPlayer
 
             if (AUDIO_PLAYER === null) // Case where there is no <audio> element in the container.
             {
-                throw new ReferenceError("MVP: No <audio> element provided.");
+                throw new ReferenceError("MAP: No <audio> element provided.");
             }
 
             this.audioPlayer = AUDIO_PLAYER;
@@ -88,7 +88,7 @@ class MagnificientAudioPlayer
             }
             else
             {
-                throw new TypeError("MVP: audioPlayer property MUST be an instance of HTMLAudioElement."); // Semantic issue.
+                throw new TypeError("MAP: audioPlayer property MUST be an instance of HTMLAudioElement."); // Semantic issue.
             }
         }
 
@@ -96,11 +96,11 @@ class MagnificientAudioPlayer
 
         if (configuration.playButton === undefined) // Default plugin setup, no specific button is provided.
         {
-            const PLAY_BUTTON: HTMLButtonElement | null = this.container.querySelector(`button[data-mvp*="play"]`); // Trying to fetch the play button.
+            const PLAY_BUTTON: HTMLButtonElement | null = this.container.querySelector(`button[data-map*="play"]`); // Trying to fetch the play button.
 
             if (PLAY_BUTTON === null) // Case where there is no play button in the DOM nor configuration.
             {
-                throw new ReferenceError(`MVP: No playButton property specified in configuration and couldn't find a button[data-mvp*="play"] in the DOM.`);
+                throw new ReferenceError(`MAP: No playButton property specified in configuration and couldn't find a button[data-map*="play"] in the DOM.`);
             }
             this.playButton = PLAY_BUTTON;
         }
@@ -112,7 +112,7 @@ class MagnificientAudioPlayer
             }
             else
             {
-                throw new TypeError("MVP: Play button must be an instance of HTMLButtonElement.");
+                throw new TypeError("MAP: Play button must be an instance of HTMLButtonElement.");
             }
         }
 
@@ -127,11 +127,11 @@ class MagnificientAudioPlayer
 
         if (configuration.pauseButton === undefined) // Default plugin setup, no specific button is provided.
         {
-            const PAUSE_BUTTON: HTMLButtonElement | null = this.container.querySelector(`button[data-mvp*="pause"]`); // Trying to fetch the pause button.
+            const PAUSE_BUTTON: HTMLButtonElement | null = this.container.querySelector(`button[data-map*="pause"]`); // Trying to fetch the pause button.
 
             if (PAUSE_BUTTON === null) // Case where there is no pause button in the DOM nor configuration.
             {
-                throw new ReferenceError(`MVP: No pauseButton property specified in configuration and couldn't find a button[data-mvp*="pause"] in the DOM.`);
+                throw new ReferenceError(`MAP: No pauseButton property specified in configuration and couldn't find a button[data-map*="pause"] in the DOM.`);
             }
             this.pauseButton = PAUSE_BUTTON;
         }
@@ -143,7 +143,7 @@ class MagnificientAudioPlayer
             }
             else
             {
-                throw new TypeError("MVP: Pause button must be an instance of HTMLButtonElement.");
+                throw new TypeError("MAP: Pause button must be an instance of HTMLButtonElement.");
             }
         }
 
@@ -209,11 +209,11 @@ class MagnificientAudioPlayer
 
         if (configuration.timeline === undefined) // Default case where no progress element is provided in configuration.
         {
-            const TIMELINE: HTMLElement | null = this.container.querySelector(`progress[data-mvp="timeline"]`);
+            const TIMELINE: HTMLElement | null = this.container.querySelector(`progress[data-map="timeline"]`);
 
             if (TIMELINE === null)
             {
-                throw new ReferenceError("MVP: No timeline HTMLProgressElement provided in configuration and unable to find it in DOM.")
+                throw new ReferenceError("MAP: No timeline HTMLProgressElement provided in configuration and unable to find it in DOM.")
             }
             else
             {
@@ -223,7 +223,7 @@ class MagnificientAudioPlayer
                 }
                 else
                 {
-                    throw new TypeError("MVP: timeline property MUST be an instance of HTMLProgressElement."); // Case impossible to reach.
+                    throw new TypeError("MAP: timeline property MUST be an instance of HTMLProgressElement."); // Case impossible to reach.
                 }
             }
         }
@@ -235,12 +235,21 @@ class MagnificientAudioPlayer
             }
             else
             {
-                throw new TypeError("MVP: timeline property MUST be an instance of HTMLProgressElement.");
+                throw new TypeError("MAP: timeline property MUST be an instance of HTMLProgressElement.");
             }
         }
 
-        this.timeline.max = this.audioPlayer.duration; // Setting the max value of the timeline to the duration of the audio makes it easier to handle later.
-        this.timeline.value = this.audioPlayer.currentTime; // Setting the value to the currentTime of the audioPlayer. Will most likely always set it to 0.
+        window.setInterval(
+            (t: number) =>
+            {
+                if (this.audioPlayer.readyState > 0)
+                {
+                    this.timeline.max = this.audioPlayer.duration; // Setting the max value of the timeline to the duration of the audio makes it easier to handle later.
+                    this.timeline.value = this.audioPlayer.currentTime; // Setting the value to the currentTime of the audioPlayer. Will most likely always set it to 0.
+                    clearInterval(t);
+                }
+            }
+        );
 
         // Handling time display.
 
@@ -254,11 +263,11 @@ class MagnificientAudioPlayer
 
             if (configuration.timeContainer === undefined)
             {
-                const TIME_CONTAINER: HTMLElement | null = document.querySelector(`span[data-mvp="time"]`);
+                const TIME_CONTAINER: HTMLElement | null = document.querySelector(`span[data-map="time"]`);
 
                 if (TIME_CONTAINER === null)
                 {
-                    throw new ReferenceError("MVP: No timeContainer property provided in configuration and couldn't find it in DOM.")
+                    throw new ReferenceError("MAP: No timeContainer property provided in configuration and couldn't find it in DOM.")
                 }
 
                 this.timeContainer = TIME_CONTAINER;
@@ -271,10 +280,20 @@ class MagnificientAudioPlayer
                 }
                 else
                 {
-                    throw new TypeError("MVP: timeContainer property MUST be an instance of HTMLElement.");
+                    throw new TypeError("MAP: timeContainer property MUST be an instance of HTMLElement.");
                 }
             }
-            this.updateTime();
+            
+            window.setInterval(
+                (t: number) =>
+                {
+                    if (this.audioPlayer.readyState > 0)
+                    {
+                        this.updateTime();
+                        clearInterval(t);
+                    }
+                }
+            );
         }
 
         let time_changing = false;
@@ -351,11 +370,11 @@ class MagnificientAudioPlayer
 
             if (configuration.muteButton === undefined)
             {
-                const MUTE_BUTTON: HTMLElement | null = this.container.querySelector(`button[data-mvp="mute"]`);
+                const MUTE_BUTTON: HTMLElement | null = this.container.querySelector(`button[data-map="mute"]`);
 
                 if (MUTE_BUTTON === null)
                 {
-                    throw new ReferenceError("MVP: No muteButton property provided in configuration and unable to find it in DOM.");
+                    throw new ReferenceError("MAP: No muteButton property provided in configuration and unable to find it in DOM.");
                 }
                 else
                 {
@@ -365,7 +384,7 @@ class MagnificientAudioPlayer
                     }
                     else
                     {
-                        throw new TypeError("MVP: muteButton property MUST be an instance of HTMLButtonElement.");                        
+                        throw new TypeError("MAP: muteButton property MUST be an instance of HTMLButtonElement.");                        
                     }
                 }
             }
@@ -377,7 +396,7 @@ class MagnificientAudioPlayer
                 }
                 else
                 {
-                    throw new TypeError("MVP: muteButton property MUST be an instance of HTMLButtonElement.");
+                    throw new TypeError("MAP: muteButton property MUST be an instance of HTMLButtonElement.");
                 }
             }
 
@@ -385,11 +404,11 @@ class MagnificientAudioPlayer
 
             if (configuration.volume === undefined)
             {
-                const VOLUME: HTMLProgressElement | null = this.container.querySelector(`progress[data-mvp="volume"]`);
+                const VOLUME: HTMLProgressElement | null = this.container.querySelector(`progress[data-map="volume"]`);
 
                 if (VOLUME === null)
                 {
-                    throw new ReferenceError("MVP: No volume property provided in configuration and unable to find it in DOM.");
+                    throw new ReferenceError("MAP: No volume property provided in configuration and unable to find it in DOM.");
                 }
                 else
                 {
@@ -399,7 +418,7 @@ class MagnificientAudioPlayer
                     }
                     else
                     {
-                        throw new TypeError("MVP: volume property MUST be an instance of HTMLButtonElement.");                        
+                        throw new TypeError("MAP: volume property MUST be an instance of HTMLButtonElement.");                        
                     }
                 }
             }
@@ -411,7 +430,7 @@ class MagnificientAudioPlayer
                 }
                 else
                 {
-                    throw new TypeError("MVP: volume property MUST be an instance of HTMLButtonElement.");
+                    throw new TypeError("MAP: volume property MUST be an instance of HTMLButtonElement.");
                 }
             }
 
