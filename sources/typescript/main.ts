@@ -539,6 +539,14 @@ class MagnificientAudioPlayer
     }
 
     /**
+     * getAudioPlayer
+     */
+    public getAudioPlayer(): HTMLAudioElement
+    {
+        return this.audioPlayer;    
+    }
+
+    /**
      * getPlayButton
      */
     public getPlayButton(): HTMLButtonElement

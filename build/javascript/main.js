@@ -274,6 +274,9 @@ var MagnificientAudioPlayer = (function () {
             });
         }
     }
+    MagnificientAudioPlayer.prototype.getAudioPlayer = function () {
+        return this.audioPlayer;
+    };
     MagnificientAudioPlayer.prototype.getPlayButton = function () {
         return this.playButton;
     };
