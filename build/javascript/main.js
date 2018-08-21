@@ -128,7 +128,7 @@ var MagnificientAudioPlayer = (function () {
         else {
             this.displayTime = true;
             if (configuration.timeContainer === undefined) {
-                var TIME_CONTAINER = document.querySelector("span[data-map=\"time\"]");
+                var TIME_CONTAINER = this.container.querySelector("span[data-map=\"time\"]");
                 if (TIME_CONTAINER === null) {
                     throw new ReferenceError("MAP: No timeContainer property provided in configuration and couldn't find it in DOM.");
                 }

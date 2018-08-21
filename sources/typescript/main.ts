@@ -263,7 +263,7 @@ class MagnificientAudioPlayer
 
             if (configuration.timeContainer === undefined)
             {
-                const TIME_CONTAINER: HTMLElement | null = document.querySelector(`span[data-map="time"]`);
+                const TIME_CONTAINER: HTMLElement | null = this.container.querySelector(`span[data-map="time"]`);
 
                 if (TIME_CONTAINER === null)
                 {
