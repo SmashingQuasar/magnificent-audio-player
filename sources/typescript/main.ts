@@ -703,33 +703,22 @@ class MagnificientAudioPlayer
     {
         if (this.audioPlayer.paused) // Should only triggers if the player isn't active.
         {
-            this.audioPlayer.play() // This returns a promise.
-                .then(
-                    () =>
-                    {
+            this.audioPlayer.play(); // This returns a promise.
 
-                        this.container.classList.add("playing"); // For CSS purpose.
+            this.container.classList.add("playing"); // For CSS purpose.
 
-                        if (this.playButton === this.pauseButton) // Handling the case where the button is a switch.
-                        {
-                            this.playButton.classList.remove("play");
-                            this.pauseButton.classList.add("pause");
-                        }
-                        else
-                        {
-                            this.playButton.hidden = true;
-                            this.pauseButton.hidden = false;
-                        }
+            if (this.playButton === this.pauseButton) // Handling the case where the button is a switch.
+            {
+                this.playButton.classList.remove("play");
+                this.pauseButton.classList.add("pause");
+            }
+            else
+            {
+                this.playButton.hidden = true;
+                this.pauseButton.hidden = false;
+            }
 
-                        return true;
-                    }
-                )
-                .catch(
-                    (error) =>
-                    {
-                        console.debug(error); // Something went wrong with the default HTML audio player.
-                    }
-                );
+            return true;
         }
         return false;
     }

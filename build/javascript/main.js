@@ -358,24 +358,18 @@ var MagnificientAudioPlayer = (function () {
         return false;
     };
     MagnificientAudioPlayer.prototype.play = function () {
-        var _this = this;
         if (this.audioPlayer.paused) {
-            this.audioPlayer.play()
-                .then(function () {
-                _this.container.classList.add("playing");
-                if (_this.playButton === _this.pauseButton) {
-                    _this.playButton.classList.remove("play");
-                    _this.pauseButton.classList.add("pause");
-                }
-                else {
-                    _this.playButton.hidden = true;
-                    _this.pauseButton.hidden = false;
-                }
-                return true;
-            })
-                .catch(function (error) {
-                console.debug(error);
-            });
+            this.audioPlayer.play();
+            this.container.classList.add("playing");
+            if (this.playButton === this.pauseButton) {
+                this.playButton.classList.remove("play");
+                this.pauseButton.classList.add("pause");
+            }
+            else {
+                this.playButton.hidden = true;
+                this.pauseButton.hidden = false;
+            }
+            return true;
         }
         return false;
     };
